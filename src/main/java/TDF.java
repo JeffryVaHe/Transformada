@@ -44,22 +44,18 @@ public class TDF {
 //    }
     public static Double[] CalcSerie1 ( Double[] arreglo){
 
-        int n= arreglo.length;
-        Double[] k = new Double[n-1];
-        for(int i=0;i<n;i++)
-        if(arreglo[i]<0 || arreglo[i]>=(n-1))
-            arreglo[i]=0.0;
-        for(int i=0;i<=n-1;i++){
-            Double res=0.0;
-        for(int j=0;j<=n;j++){
-            res+=arreglo[j]*Math.pow((2.71828),(-2*3.141519*i*j)/n);
+        int n = arreglo.length;
+        Double[] k = new Double[n ];
+        for (int i = 0; i < n; i++)
+            if (arreglo[i] < 0 || arreglo[i] >= (n - 1))
+                arreglo[i] = 0.0;
+        for (int i = 0; i < n ; i++) {
+            Double res = 0.0;
+            for (int j = 0; j < n; j++) {
+                res += arreglo[j] * Math.pow((Math.E), (-2 * Math.PI * (i+1) * (j+1)) / n);
 
-
-
-        }
-        k[i]=res;
-
-
+            }
+            k[i] = res;
         }
 
 
