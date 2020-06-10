@@ -42,7 +42,7 @@ public class TDF {
 //            return 0;
 //        }
 //    }
-    public static Double[] CalcSerie1 ( Double[] arreglo){
+    public static Double[] CalcSerie1 (Double[] arreglo){
 
         int n = arreglo.length;
         Double[] k = new Double[n ];
@@ -50,7 +50,7 @@ public class TDF {
             if (arreglo[i] < 0 || arreglo[i] >= (n - 1))
                 arreglo[i] = 0.0;
         for (int i = 0; i < n ; i++) {
-            Double res = 0.0;
+            double res = 0.0;
             for (int j = 0; j < n; j++) {
                 res += arreglo[j] * Math.pow((Math.E), (-2 * Math.PI * (i+1) * (j+1)) / n);
 

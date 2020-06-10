@@ -20,15 +20,17 @@ public class CartesianPlot extends Stage {
     public CartesianPlot(String InPar1, String InPar2, String InForm) {
         String [] arregloC= InForm.split(",");
         Double[] arregloI= new  Double[arregloC.length];
+
         for(int i=0;i<arregloC.length;i++){
 
             arregloI[i]=Double.parseDouble(arregloC[i]);
         }
+        Double[] arreglo = TDF.CalcSerie1(arregloI);
         double a = 0;
-        double b = Double.parseDouble(InPar2);
+        double b =arreglo.length;
         double paso = 1;
         double min=Double.MAX_VALUE, max=Double.MIN_VALUE;
-        Double[] arreglo = TDF.CalcSerie1(arregloI);
+
         for(int i=0;i<arreglo.length;i++){
 
 
@@ -40,7 +42,7 @@ public class CartesianPlot extends Stage {
             }
         }
 
-        double yBounds = 10.0;//Math.max(Math.abs(min), Math.abs(max));
+        double yBounds = Math.max(Math.abs(min), Math.abs(max));
         double xBounds = Math.max(Math.abs(a), Math.abs(b));
 
         indice = 0;
