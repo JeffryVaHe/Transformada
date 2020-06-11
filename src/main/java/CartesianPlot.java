@@ -7,9 +7,7 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
 import javafx.stage.Stage;
-import org.apache.commons.math3.complex.Complex;
-import org.mariuszgromada.math.mxparser.Argument;
-import org.mariuszgromada.math.mxparser.Expression;
+
 
 import java.util.function.Function;
 
@@ -64,21 +62,10 @@ public class CartesianPlot extends Stage {
                 axes
         );
 
-        final org.mariuszgromada.math.mxparser.Function f1 =new org.mariuszgromada.math.mxparser.Function("f(x)="+InForm);
 
 
-        Plot plot2= new Plot(
-                aDouble -> {
 
-                    double res;
-                    Argument ax = new Argument("x=" + aDouble);
-                    Expression e1 = new Expression("f(x)", f1, ax);
-                    res = e1.calculate();
-                    return res;
-                },
-                a, b+1,paso/4,
-                axes
-        );
+
 
         Plot plotlimitea= new Plot(
                 new Function<Double, Double>() {
@@ -117,7 +104,7 @@ public class CartesianPlot extends Stage {
         );
 
         StackPane layout = new StackPane(
-                plot,plot2, plotlimitea, plotlimiteb
+                plot, plotlimitea, plotlimiteb
         );
         layout.setPadding(new Insets(20));
 
@@ -171,7 +158,6 @@ public class CartesianPlot extends Stage {
     private static int indice = 0;
     private static Color[] colores = {
             Color.ORANGE,
-            Color.RED,
             Color.GREY.brighter(),
             Color.GREY.brighter()
     };

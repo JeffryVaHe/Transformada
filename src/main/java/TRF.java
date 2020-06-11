@@ -4,48 +4,48 @@ public class TRF {
 
 
 
-        public static int bitReverse(int n, int bits) {
-            int reversa = n;
-            int contador = bits - 1;
+    public static int bitReverse(int n, int bits) {
+        int reversa = n;
+        int contador = bits - 1;
 
+        n >>= 1;
+        while (n > 0) {
+            reversa = (reversa << 1) | (n & 1);
+            contador--;
             n >>= 1;
-            while (n > 0) {
-                reversa = (reversa << 1) | (n & 1);
-                contador--;
-                n >>= 1;
-            }
-
-            return ((reversa << contador) & ((1 << bits) - 1));
         }
 
-        static void trapida(Complejo[] buffer) {
+        return ((reversa << contador) & ((1 << bits) - 1));
+    }
 
-            int bits = (int) (log(buffer.length) / log(2));
-            for (int j = 1; j < buffer.length / 2; j++) {
+    static void trapida(Complejo[] buffer) {
 
-                int cambioPos = bitReverse(j, bits);
-                Complejo temp = buffer[j];
-                buffer[j] = buffer[cambioPos];
-                buffer[cambioPos] = temp;
-            }
+        int bits = (int) (log(buffer.length) / log(2));
+        for (int j = 1; j < buffer.length / 2; j++) {
 
-            for (int N = 2; N <= buffer.length; N <<= 1) {
-                for (int i = 0; i < buffer.length; i += N) {
-                    for (int k = 0; k < N / 2; k++) {
+            int cambioPos = bitReverse(j, bits);
+            Complejo temp = buffer[j];
+            buffer[j] = buffer[cambioPos];
+            buffer[cambioPos] = temp;
+        }
 
-                        int evenIndex = i + k;
-                        int oddIndex = i + k + (N / 2);
-                        Complejo even = buffer[evenIndex];
-                        Complejo odd = buffer[oddIndex];
+        for (int N = 2; N <= buffer.length; N <<= 1) {
+            for (int i = 0; i < buffer.length; i += N) {
+                for (int k = 0; k < N / 2; k++) {
 
-                        double term = (-2 * PI * k) / (double) N;
-                        Complejo exp = (new Complejo(cos(term), sin(term)).mult(odd));
+                    int evenIndex = i + k;
+                    int oddIndex = i + k + (N / 2);
+                    Complejo even = buffer[evenIndex];
+                    Complejo odd = buffer[oddIndex];
 
-                        buffer[evenIndex] = even.suma(exp);
-                        buffer[oddIndex] = even.sub(exp);
-                    }
+                    double term = (-2 * PI * k) / (double) N;
+                    Complejo exp = (new Complejo(cos(term), sin(term)).mult(odd));
+
+                    buffer[evenIndex] = even.suma(exp);
+                    buffer[oddIndex] = even.sub(exp);
                 }
             }
+        }
 
 
 //        public static void main(String[] args) {
@@ -62,7 +62,7 @@ public class TRF {
 //            for (Complejo c : cinput) {
 //                System.out.println(c);
 //            }
-        //}
+//        }
     }
 
     static class Complejo {
@@ -87,8 +87,7 @@ public class TRF {
         }
 
         public Complejo mult(Complejo b) {
-            return new Complejo(this.re * b.re - this.img * b.img,
-                    this.re * b.img + this.img * b.re);
+            return new Complejo(this.re * b.re - this.img * b.img,this.re * b.img + this.img * b.re);
         }
 
         @Override

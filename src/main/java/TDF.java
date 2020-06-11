@@ -1,90 +1,92 @@
 //import org.apache.commons.math3.FunctionEvaluationException;
 //import org.apache.commons.math3.analysis.UnivariateRealFunction;
-import org.apache.commons.math3.analysis.integration.TrapezoidIntegrator;
-import org.apache.commons.math3.complex.Complex;
-import org.apache.commons.math3.transform.DftNormalization;
-import org.apache.commons.math3.transform.FastFourierTransformer;
-import org.apache.commons.math3.transform.TransformType;
-import org.mariuszgromada.math.mxparser.Argument;
-import org.mariuszgromada.math.mxparser.Expression;
-import org.mariuszgromada.math.mxparser.Function;
-import java.math.*;
 
-import java.util.Arrays;
 
+import java.util.ArrayList;
+import org.apache.commons.math3.complex.*;
 public class TDF {
-//    public static double integrar(double a, double b, String formula) {
-//        final Function f1 =new Function("f(x)="+formula);
-//
-//        TrapezoidIntegrator integrador = new TrapezoidIntegrator();
-//        integrador.setAbsoluteAccuracy(0.1);
-//        integrador.setRelativeAccuracy(0.1);
-//        try{
-//            return integrador.integrate(x -> {
-//                Argument ax= new Argument("x="+x);
-//                Expression e1 =new Expression("f(x)",f1,ax);
-//                return e1.calculate();
-//            }, a, b);
-//        }catch (Exception e){
-//            System.out.println(e);
-//            return 0;
-//        }
-//    }
 
-//    public static double integrar(double a, double b, UnivariateRealFunction f) {
-//        TrapezoidIntegrator integrador = new TrapezoidIntegrator();
-//        integrador.setAbsoluteAccuracy(0.1);
-//        integrador.setRelativeAccuracy(0.1);
-//        try{
-//            return integrador.integrate(f, a, b);
-//        }catch (Exception e){
-//            System.out.println(e);
-//            return 0;
-//        }
-//    }
     public static Double[] CalcSerie1 (Double[] arreglo){
+        double aux=0, aux2=0;
 
         int n = arreglo.length;
-        Double[] k = new Double[n ];
-        for (int i = 0; i < n; i++)
-            if (arreglo[i] < 0 || arreglo[i] >= (n - 1))
-                arreglo[i] = 0.0;
-        for (int i = 0; i < n ; i++) {
-            double res = 0.0;
-            for (int j = 0; j < n; j++) {
-                res += arreglo[j] * Math.pow((Math.E), (-2 * Math.PI * (i+1) * (j+1)) / n);
+
+        Complex[][] w = new Complex[n][n];
+        Double[] k = new Double[n];
+//        for (int i = 0; i < n; i++)
+//            if (arreglo[i] < 0 || arreglo[i] > (n-1))
+//                arreglo[i] = 0.0;
+
+
+
+
+
+        for(int i=0;i<arreglo.length;i++){
+            for(int j=0;j<arreglo.length;j++){
+                aux=Math.cos((-2 * Math.PI)/n);
+                aux2=Math.sin((-2 * Math.PI)/n);
+                Complex complejo =new Complex(aux,aux2);
+
+                complejo=complejo.pow(i*j);
+
+//               complejo= complejo.sqrt();
+                w[i][j]=complejo;
+
 
             }
-            k[i] = res;
+
         }
+
+        double sumador = 0.0;
+        double aux1=0.0;
+        for(int i=0;i<arreglo.length;i++){
+            for(int j=0;j<arreglo.length;j++) {
+
+                aux1+=arreglo[j]*w[i][j].getReal();
+                sumador+=arreglo[j]*w[i][j].getImaginary();
+
+
+            }
+
+            k[i]=Math.sqrt(Math.pow(aux1,2)+Math.pow(sumador,2));
+            aux1=0;
+            sumador=0;
+
+
+        }
+
         return k;
     }
-    public static Complex[] CalcSerie(double a, double b, double x, int nMaximo, String formula){
-
-        FastFourierTransformer transformer = new FastFourierTransformer(DftNormalization.STANDARD);
-        final Function f1 =new Function("f(x)="+formula);
 
 
-        try{
-            Complex[] complejo= transformer.transform(t -> {
-                Argument ax= new Argument("x="+t);
-                Expression e1 =new Expression("f(x)",f1,ax);
-                return e1.calculate();
-            }, a, b,128, TransformType.FORWARD);
-            System.out.println(Arrays.toString(complejo));
-            return complejo;
-        }catch (Exception e){
-            System.out.println(e);
-            return new Complex[]{};
-        }
-    }
-    public static double sumatoria(int a, int b, Funcion funcion){
-        double res = 0;
-        for(int i = a; i <= b ; i++){
-            res += funcion.f(i);
-        }
 
-        return res;
-    }
+//    public double theta(){
+//
+//
+//        if (getParteReal() == 0 && getParteImaginaria() == 0) {
+//            this.theta = 0;
+//        } else if (getParteReal() == 0 && getParteImaginaria() != 0) {
+//            if (getParteImaginaria() > 0) {
+//                this.theta = 90;
+//            } else {
+//                this.theta = 270;
+//            }
+//        } else if (getParteReal() != 0 && getParteImaginaria() == 0) {
+//            if (getParteReal() > 0) {
+//                this.theta = 0;
+//            } else {
+//                this.theta = 180;
+//            }
+//        } else {
+//            this.theta = Math.atan(( getParteImaginaria()/getParteReal() ));}
+//
+//
+//        return this.theta ;
+//
+//
+//    }
 
+    //this.r = (Math.sqrt(Math.pow(getParteReal(), 2) + Math.pow(getParteImaginaria(), 2)));
+    //        theta();
+    //        return this.r+"(Cos"+this.theta+")+ iSen("+this.theta+")";
 }
