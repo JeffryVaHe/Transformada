@@ -57,10 +57,6 @@ public class TDF {
             }
             k[i] = res;
         }
-
-
-
-
         return k;
     }
     public static Complex[] CalcSerie(double a, double b, double x, int nMaximo, String formula){

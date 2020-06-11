@@ -12,6 +12,7 @@ import javafx.stage.Stage;
 
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 public class Main extends Application {
@@ -92,13 +93,25 @@ public class Main extends Application {
                 }
             }
         });
+        String vector=InForm.getText();
+        String [] arregloC= vector.split(",");
+        Double[] arregloI= new  Double[arregloC.length];
+        for (int i = 0; i < arregloC.length; i++) {
+            arregloI[i] = Double.parseDouble(arregloC[i]);
+        }
+        Double[] Matriz = TDF.CalcSerie1(arregloI);
 
         Cambiar.setOnAction(event ->  InPar1.setText("-"+InPar2.getText()));
 
         calcular.setOnAction((event -> {
-            res.setText("");
+
+            res.setText(Arrays.toString(Matriz));
             final ProgressIndicator progreso = new ProgressIndicator();
             LayVert.getChildren().add(progreso);
+
+
+
+
 //            ArrayList<double[]> Ind= Fourier.Indices(Double.parseDouble(InPar1.getText()), Double.parseDouble(InPar2.getText()),Integer.parseInt(IngIndice.getText()), InForm.getText());
 
 //            if((Ind.get(0)[1]==0) && (Ind.get(1)[1]==0) ){
@@ -124,7 +137,7 @@ public class Main extends Application {
 
                     Platform.runLater(() -> {
                         // res.setText(String.valueOf(resultado));
-                        new CartesianPlot(InPar1.getText(),InPar2.getText(),InForm.getText());
+                        new CartesianPlot(InForm.getText());
                         LayVert.getChildren().remove(progreso);
                     });
                 }//else if(grupo1.getSelectedToggle() == Rc){
